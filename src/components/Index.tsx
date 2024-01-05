@@ -58,9 +58,6 @@ export default function Home() {
               <DocumentPlusIcon className="w-5 text-udni-teal" />{' '}
               <h3>Start new form</h3>
             </div>
-            <p className="text-gray-600 text-sm">
-              For physicians, geneticists. Start questionnare.
-            </p>
             <label className="mt-4">
               <input
                 type="checkbox"
@@ -93,9 +90,7 @@ export default function Home() {
               <DocumentArrowDownIcon className="w-5 text-udni-teal" />
               <h3>Continue form</h3>
             </div>
-            <p className="text-gray-600 text-sm">
-              Add images, documents to an existing form.
-            </p>
+            <p className="text-gray-600 text-sm">Continue existing form.</p>
             <ContinueForm />
           </div>
         </div>
