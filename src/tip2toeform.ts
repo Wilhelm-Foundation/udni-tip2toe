@@ -26,6 +26,13 @@ const formSections: IFormSection[] = [
     slug: 'pedigree',
     description: `Ask about the patient's symptoms/malformation/neurological/neuromuscular disease/cancer/other disease in the family for at least three, preferably four generations. Mark diagnosis in pedigree. Please upload the pedigree as a PED file or an image. `,
     uploadSections: ['Pedigree'],
+    questions: [
+      {
+        title: 'Other information about family history',
+        name: 'familyhistory',
+        type: 'longText',
+      },
+    ],
   },
   {
     title: 'Family history',
@@ -34,7 +41,7 @@ const formSections: IFormSection[] = [
     questions: [
       {
         title:
-          'The suspected mode of inheritance is (multiple options possible)',
+          'The suspected mode of inheritance is (multiple options possible, use ctrl and shift)',
         name: 'inheritanceMode',
         type: 'selectMultiple',
         options: [
@@ -50,7 +57,7 @@ const formSections: IFormSection[] = [
       {
         title: "The patient's parents are consanguineous?",
         name: 'parentsConsanguineous',
-        options: ['Yes', 'No'],
+        options: ['Yes', 'No', 'Unknown'],
         type: 'select',
       },
       {
@@ -86,14 +93,14 @@ const formSections: IFormSection[] = [
     uploadSections: ['Current and previous growth charts'],
     questions: [
       {
-        title: 'Gestational age Weeks Days',
+        title: 'Born at gestational age (weeks, days)',
         name: 'gestionalAge',
         type: 'text',
       },
       { title: 'Birth length (cm)', name: 'birthLength', type: 'number' },
       { title: 'Birth weight (g)', name: 'birthWeight', type: 'number' },
       {
-        title: 'Head circumference (cm)',
+        title: 'Birth head circumference (cm)',
         name: 'headCircumference',
         type: 'number',
       },
@@ -103,17 +110,17 @@ const formSections: IFormSection[] = [
         type: 'date',
       },
       {
-        title: 'Length at the last visit (cm)',
+        title: 'Length at the last visit (cm) (SD)',
         name: 'lastVisitLength',
         type: 'number',
       },
       {
-        title: 'Weight at the last visit (g)',
+        title: 'Weight at the last visit (kg) (SD)',
         name: 'lastVisitWeight',
         type: 'number',
       },
       {
-        title: 'Head circumference at the last visit (cm)',
+        title: 'Head circumference at the last visit (cm) (SD)',
         name: 'lastVisitHeadCircumference',
         type: 'number',
       },
@@ -125,39 +132,33 @@ const formSections: IFormSection[] = [
     description: `Attach relevant reports and preferably original imaging on disks or upload  images in jpg or TIFF format.
 * In case of neurologic disorders, preferably MRI or CT/ultrasound of internal organs as appropriate
 * In case of skeletal concerns (e.g., skeletal dysplasia), full skeletal survey  that includes bilateral anteroposterior (AP) and posteroanterior (PA)  projections of hands, forearms, humerus, feet, leg, femur, pelvis, spine and skull.`,
-    uploadSections: ['Radiology'],
+    uploadSections: [
+      'Radiology brain',
+      'Radiology skeleton',
+      'Radiology other',
+    ],
   },
   {
     title: 'Previous genetic investigations',
     slug: 'previous-genetic-investigations',
     description: ``,
     uploadSections: [
+      'Karyotype',
       'Array',
+      'FISH',
       'Targeted sequencing',
       'WES panels/trios',
       'WGS panels/trios',
     ],
     questions: [
       {
-        name: 'karyotyping',
-        title: 'Karyotyping',
-        options: ['Yes', 'No'],
-        type: 'select',
-      },
-      {
-        name: 'karyotypingKaryotype',
-        title: 'Karyotype',
-        type: 'text',
-      },
-      { name: 'fish', title: 'FISH', options: ['Yes', 'No'], type: 'select' },
-      {
-        name: 'fishKaryotype',
-        title: 'Karyotype',
-        type: 'text',
-      },
-      {
         name: 'arrayResults',
         title: 'Array results',
+        type: 'text',
+      },
+      {
+        name: 'arrayFishResults',
+        title: 'FISH results',
         type: 'text',
       },
       {
@@ -175,16 +176,27 @@ const formSections: IFormSection[] = [
         title: 'WGS panels/trios variants',
         type: 'text',
       },
+      {
+        name: 'rnaSeqResults',
+        title: 'RNA-seq results',
+        type: 'text',
+      },
+      {
+        name: 'methylationResults',
+        title: 'Methylation results',
+        type: 'text',
+      },
     ],
   },
   {
     title: 'Other Laboratory results',
     slug: 'other-laboratory-results',
-    description: `Key laboratory test results:
-* Basic (e.g., blood status, liver status, kidney status, basal endocrinological investigation)
-* Advanced testing as appropriate for phenotype (e.g., plasma amino acids, urine organic acids, carbohydrate deficient transferring)
-* Results of biopsies`,
-    uploadSections: ['Laboratory'],
+    description: `Key laboratory test results:`,
+    uploadSections: [
+      'Basic (e.g., blood status, liver status, kidney status, basal endocrinological investigation)',
+      'Advanced testing as appropriate for phenotype (e.g., plasma amino acids, urine organic acids, carbohydrate deficient transferring)',
+      'Results of biopsies',
+    ],
   },
   {
     title: 'This is me',
@@ -358,6 +370,10 @@ Worsening?)
         label: 'Disproportionate short-trunk short stature',
       },
       {
+        id: 'HP:0100555',
+        label: 'Asymmetric growth',
+      },
+      {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
       },
@@ -391,6 +407,7 @@ Worsening?)
       { id: 'HP:0000319', label: 'Smooth philtrum' },
       { id: 'HP:0000322', label: 'Short philtrum' },
       { id: 'HP:0000343', label: 'Long philtrum' },
+      { id: 'HP:0000324', label: 'Facial asymmetry' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -438,6 +455,8 @@ Worsening?)
       { id: 'HP:0006482', label: 'Abnormal dental morphology' },
       { id: 'HP:0000682', label: 'Abnormal dental enamel morphology' },
       { id: 'HP:0000157', label: 'Abnormality of the tongue' },
+      { id: 'HP:0002745', label: 'Oral leucoplakia' },
+      { id: 'HP:0100669', label: 'Abnormal pigmentation of the oral mucosa' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -449,6 +468,12 @@ Worsening?)
     title: 'Nose',
     ontologies: [
       { id: 'HP:0005105', label: 'Abnormal nasal morphology' },
+      { id: 'HP:0003189', label: 'Long nose' },
+      { id: 'HP:0003196', label: 'Short nose' },
+      { id: 'HP:0000420', label: 'Short nasal septum' },
+      { id: 'HP:0000431', label: 'Wide nasal bridge' },
+      { id: 'HP:0004426', label: 'Prominent nasal bridge' },
+      { id: 'HP:0000463', label: 'Anteverted nares' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -465,6 +490,7 @@ Worsening?)
       { id: 'HP:0000369', label: 'Low-set ears' },
       { id: 'HP:0000400', label: 'Macrotia' },
       { id: 'HP:0008551', label: 'Microtia' },
+      { id: 'HP:0000358', label: 'Posteriorly rotated ears' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -473,23 +499,37 @@ Worsening?)
     slug: 'ears',
   },
   {
-    title: 'Central nervous system + neuromuscular system + cognition',
+    title: 'Central nervous system',
     ontologies: [
       { id: 'HP:0000707', label: 'Abnormality of the nervous system' },
       { id: 'HP:0012443', label: 'Abnormality of brain morphology' },
       { id: 'HP:0002194', label: 'Delayed gross motor development' },
-      { id: 'HP:0001263', label: 'Global developmental delay' },
-      { id: 'HP:0001256', label: 'Intellectual disability, mild' },
-      { id: 'HP:0002342', label: 'Intellectual disability, moderate' },
-      { id: 'HP:0002187', label: 'Intellectual disability, profound' },
-      { id: 'HP:0010864', label: 'Intellectual disability, severe' },
-      { id: 'HP:0006887', label: 'Intellectual disability, progressive' },
+
+      { id: 'HP:0009830', label: 'Peripheral neuropathy' },
+      { id: 'HP:0001251', label: 'Ataxia' },
+      { id: 'HP:0001332', label: 'Dystonia' },
+      { id: 'HP:0002385', label: 'Paraparesis' },
+      { id: 'HP:0001257', label: 'Spasticity' },
+      { id: 'HP:0001266', label: 'Choreoathetosis' },
+      { id: 'HP:0001288', label: 'Gait disturbance' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
       },
     ],
-    slug: 'central-nervous-system-neuromuscular-system-cognition',
+    slug: 'central-nervous-system',
+  },
+  {
+    title: 'Cognition',
+    ontologies: [
+      { id: 'HP:0001263', label: 'Global developmental delay' },
+      { id: 'HP:0001256', label: 'Intellectual disability, mild' },
+      { id: 'HP:0002342', label: 'Intellectual disability, moderate' },
+      { id: 'HP:0010864', label: 'Intellectual disability, severe' },
+      { id: 'HP:0002187', label: 'Intellectual disability, profound' },
+      { id: 'HP:0006887', label: 'Intellectual disability, progressive' },
+    ],
+    slug: 'cognition',
   },
   {
     title: 'Behavioral abnormality',
@@ -498,6 +538,8 @@ Worsening?)
       { id: 'HP:0007018', label: 'Attention deficit hyperactivity disorder' },
       { id: 'HP:0100716', label: 'Self-injurious behavior' },
       { id: 'HP:0000718', label: 'Aggressive behavior' },
+      { id: 'HP:0002360', label: 'Sleep abnormality' },
+      { id: 'HP:0100033', label: 'Tics' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -511,6 +553,8 @@ Worsening?)
       { id: 'HP:0000750', label: 'Delayed speech and language development' },
       { id: 'HP:0002465', label: 'Poor speech' },
       { id: 'HP:0001344', label: 'Absent speech' },
+      { id: 'HP:0002167', label: 'Abnormal speech vocalisation' },
+      { id: 'HP:5200001', label: 'Selektiv mutism' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -527,6 +571,10 @@ Worsening?)
       { id: 'HP:0002384', label: 'Focal impaired awareness seizure' },
       { id: 'HP:0002197', label: 'Generalized onset seizure' },
       { id: 'HP:0002353', label: 'EEG abnormality' },
+      { id: 'HP:0002521', label: 'Hypsarythmia' },
+      { id: 'HP:0032894', label: 'Seizure precipated by febrile infection' },
+      { id: 'HP:0002069', label: 'Bilateral tonic.clonic seizure' },
+      { id: 'HP:0002121', label: 'Generalized non-motor (absence) seizure' },
       {
         id: 'other',
         label:
@@ -559,6 +607,8 @@ Worsening?)
     title: 'Skeleton',
     ontologies: [
       { id: 'HP:0002652', label: 'Skeletal dysplasia' },
+      { id: 'HP:0004348', label: 'Abnormality of bone mineral density' },
+      { id: 'HP:0011001', label: 'Increased bone mineral density' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -592,6 +642,9 @@ Worsening?)
       { id: 'HP:0000782', label: 'Abnormal scapula morphology' },
       { id: 'HP:0003043', label: 'Abnormal shoulder morphology' },
       { id: 'HP:0000766', label: 'Abnormal sternum morphology' },
+      { id: 'HP:0001547', label: 'Abnormal rib cage morphology' },
+      { id: 'HP:0000889', label: 'Abnormal clavicle morphology' },
+      { id: 'HP:0040163', label: 'Abnormal pelvis bone morpholgy' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -606,6 +659,8 @@ Worsening?)
       { id: 'HP:0002818', label: 'Abnormality of the radius' },
       { id: 'HP:0002997', label: 'Abnormality of the ulna' },
       { id: 'HP:0009811', label: 'Abnormality of the elbow' },
+      { id: 'HP:0003063', label: 'Abnormality of the humerus' },
+      { id: 'HP:0003043', label: 'Abnormal shoulder morphology' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -643,6 +698,9 @@ Worsening?)
       { id: 'HP:0002992', label: 'Abnormality of tibia morphology' },
       { id: 'HP:0002991', label: 'Abnormality of fibula morphology' },
       { id: 'HP:0003045', label: 'Abnormality of the patella morphology' },
+      { id: 'HP:0002823', label: 'Abnormal femur morphology' },
+      { id: 'HP:0002970', label: 'Genu varum' },
+      { id: 'HP:0002857', label: 'Genu valgum' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -663,6 +721,7 @@ Worsening?)
       { id: 'HP:0010055', label: 'Broad hallux' },
       { id: 'HP:0010097', label: 'Bifid distal phalanx of hallux' },
       { id: 'HP:0001845', label: 'Overlapping toes' },
+      { id: 'HP:0001838', label: 'Rocker bottom foot' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -680,6 +739,7 @@ Worsening?)
       { id: 'HP:0006536', label: 'Airway obstruction' },
       { id: 'HP:0005957', label: 'Breathing dysregulation' },
       { id: 'HP:0002094', label: 'Dyspnea' },
+      { id: 'HP:0002099', label: 'Asthma' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -699,6 +759,9 @@ Worsening?)
       { id: 'HP:0011675', label: 'Arrhythmia' },
       { id: 'HP:0001638', label: 'Cardiomyopathy' },
       { id: 'HP:0000822', label: 'Hypertension' },
+      { id: 'HP:0001642', label: 'Pulmonic stenosis' },
+      { id: 'HP:0001682', label: 'Subvalvular aortic stenosis' },
+      { id: 'HP:0004381', label: 'Supravalvulat aortic stenosis' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -715,6 +778,7 @@ Worsening?)
       { id: 'HP:0000107', label: 'Renal cysts' },
       { id: 'HP:0000105', label: 'Enlarged kidney' },
       { id: 'HP:0012211', label: 'Abnormal kidney function' },
+      { id: 'HP:0000076', label: 'Vesicoureteral reflux' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
@@ -761,11 +825,9 @@ Worsening?)
       { id: 'HP:0001000', label: 'Abnormality of skin pigmentation' },
       { id: 'HP:0007565', label: 'Multiple cafe-au-lait spots' },
       { id: 'HP:0001480', label: 'Freckling (axillary or inguinal)' },
-      { id: 'HP:0100669', label: 'Abnormal pigmentation of the oral mucosa' },
       { id: 'HP:0031447', label: 'Penile freckling' },
       { id: 'HP:0008066', label: 'Abnormal blistering of the skin' },
       { id: 'HP:0011276', label: 'Vascular skin abnormality' },
-      { id: 'HP:0002745', label: 'Oral leucoplakia' },
       { id: 'HP:0002558', label: 'Supernumerary nipple' },
       { id: 'HP:0008069', label: 'Neoplasm of the skin' },
       { id: 'HP:0000958', label: 'Dry skin' },
@@ -811,6 +873,7 @@ Worsening?)
       { id: 'HP:0000834', label: 'Abnormality of the adrenal glands' },
       { id: 'HP:0000826', label: 'Precocious puberty' },
       { id: 'HP:0000823', label: 'Delayed puberty' },
+      { id: 'HP:0000836', label: 'Hyperthyroidism' },
       {
         id: 'other',
         label: 'Other. Describe in Clinical summary and/or add HPO terms here',
