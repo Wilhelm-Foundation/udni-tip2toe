@@ -6,19 +6,21 @@ const formSections: IFormSection[] = [
   {
     title: 'Photographs',
     slug: 'photographs',
-    uploadSections: [
-      'Face from the front',
-      'Face in profile with ear shown left side',
-      'Face in profile with ear shown right side',
-      'Whole body in underwear front',
-      'Whole body in underwear back',
-      'Whole body in underwear in profile',
-      'Hands plantar view',
-      'Hands dorsal view',
-      'Feet plantar view',
-      'Feet dorsal view',
-      'Any other abnormalities',
-      'Add Video of speech, gait, hand movements when relevant',
+    uploadGroupSections: [
+      [
+        'Face from the front',
+        'Face profile with ear shown left side',
+        'Face profile with ear shown right side',
+      ],
+      [
+        'Whole body in underwear front',
+        'Whole body in underwear back',
+        'Whole body in underwear in profile',
+      ],
+      ['Other anomalies', 'Other anomalies', 'Other anomalies'],
+      ['Hands', 'Dorsal'],
+      ['Feet', 'Plantar'],
+      ['Videos', 'Videos'],
     ],
   },
   {
@@ -199,32 +201,9 @@ const formSections: IFormSection[] = [
     ],
   },
   {
-    title: 'This is me',
-    slug: 'this-is-me',
-    questions: [
-      { title: 'My caregivers are', name: 'caregivers', type: 'longText' },
-      {
-        title: 'My favourite things to do',
-        name: 'favourite',
-        type: 'longText',
-      },
-      { title: 'I don’t like to', name: 'dontLike', type: 'longText' },
-      { title: 'When I am happy I', name: 'happy', type: 'longText' },
-      { title: 'When I am worried I', name: 'worried', type: 'longText' },
-      { title: 'I need help with', name: 'needHelpWith', type: 'longText' },
-      {
-        title: 'I can do these things for myself',
-        name: 'canDo',
-        type: 'longText',
-      },
-      { title: 'I sleep', name: 'sleep', type: 'longText' },
-      { title: 'I eat', name: 'eat', type: 'longText' },
-      {
-        title: 'I have the following medical problems',
-        name: 'medical',
-        type: 'longText',
-      },
-    ],
+    title: 'Parents summary',
+    slug: 'parents-summary',
+    uploadSections: ['Summary'],
   },
   {
     title: 'Clinical findings',
