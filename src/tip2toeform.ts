@@ -556,7 +556,7 @@ Worsening?)
       { id: 'HP:0002384', label: 'Focal impaired awareness seizure' },
       { id: 'HP:0002197', label: 'Generalized onset seizure' },
       { id: 'HP:0002353', label: 'EEG abnormality' },
-      { id: 'HP:0002521', label: 'Hypsarythmia' },
+      { id: 'HP:0002521', label: 'Hypsarrythmia' },
       { id: 'HP:0032894', label: 'Seizure precipated by febrile infection' },
       { id: 'HP:0002069', label: 'Bilateral tonic.clonic seizure' },
       { id: 'HP:0002121', label: 'Generalized non-motor (absence) seizure' },
