@@ -17,10 +17,10 @@ const formSections: IFormSection[] = [
         'Whole body in underwear back',
         'Whole body in underwear in profile',
       ],
-      ['Other anomalies', 'Other anomalies', 'Other anomalies'],
+      ['Other anomalies'],
       ['Hands', 'Dorsal'],
       ['Feet', 'Plantar'],
-      ['Videos', 'Videos'],
+      ['Videos'],
     ],
   },
   {
@@ -66,6 +66,12 @@ const formSections: IFormSection[] = [
         title:
           'Another relative affected with the same diagnosis as the patient? If Yes, indicate relationship.',
         name: 'relativeAffected',
+        options: ['Yes', 'No', 'Unknown'],
+        type: 'select',
+      },
+      {
+        title: '',
+        name: 'affectedRelatives',
         type: 'selectMultiple',
         options: [
           'None',
