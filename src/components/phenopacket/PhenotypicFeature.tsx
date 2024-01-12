@@ -28,8 +28,8 @@ export default function PhenotypicFeature({ phenotypicFeature }: IProps) {
         </p>
       </NavLink>
       {phenotypicFeature?.description ? (
-        <p className="text-sm flex items-end">
-          {' Added in ' + phenotypicFeature?.title}
+        <p className="text-sm flex items-end pl-5 lg:pl-0">
+          {'Added in ' + phenotypicFeature?.title}
         </p>
       ) : null}
     </div>
