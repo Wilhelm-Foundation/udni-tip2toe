@@ -11,9 +11,14 @@ import NavButtons from './form/NavButtons';
 
 interface IProps {
   slug: string;
+  title: string;
   ontologies?: OntologyClass[];
 }
-export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
+export default function EditPhenotypicFeatures({
+  slug,
+  ontologies,
+  title,
+}: IProps) {
   const { state, dispatch } = useContext(AppContext);
 
   const save = async (ontology: OntologyClass, value: YesNoUnknown) => {
@@ -28,6 +33,8 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
         payload: {
           type: ontology,
           excluded: value === 'no',
+          description: slug,
+          title: title,
         },
       });
   };
@@ -63,6 +70,7 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
               onset: undefined,
               resolution: undefined,
               severity: undefined,
+              title: '',
             } as PhenotypicFeature),
         ) || []),
       ];
@@ -170,6 +178,34 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
           ?.filter((x) => x.id === 'other')
           .map(({ label }) => (
             <div className="py-4" key={`chk-other`}>
+              <div className="divide-y divide-gray-300">
+                {state.phenoPacket?.phenotypicFeatures
+                  ?.filter(
+                    (st) =>
+                      ontologies?.some((sf) => sf.id === st.type?.id) ===
+                        false && st.description === slug,
+                  )
+                  .map((pf, i) => {
+                    if (!pf.type) return null;
+                    return (
+                      <>
+                        <EditPhenotypicFeature
+                          key={`et-${pf.type?.id}-${i}`}
+                          ontology={pf.type}
+                          value={getYesNoUnknown(
+                            state?.phenoPacket?.phenotypicFeatures?.find(
+                              (x) => x.type?.id === pf.type?.id,
+                            ),
+                          )}
+                          onChange={(value) => {
+                            if (pf.type) save(pf.type, value);
+                          }}
+                        />
+                      </>
+                    );
+                  })}
+              </div>
+
               <p className="my-2">{label}</p>
               <AddCustomTerm onSubmit={onAddCustomTerm} key={`act-${slug}`} />
               {message && (
@@ -180,32 +216,6 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
                   {message}
                 </p>
               )}
-
-              <div className="mt-4 divide-y divide-gray-300">
-                {state.phenoPacket?.phenotypicFeatures
-                  ?.filter(
-                    (st) =>
-                      ontologies?.some((sf) => sf.id === st.type?.id) ===
-                        false && st.description === slug,
-                  )
-                  .map((pf, i) => {
-                    if (!pf.type) return null;
-                    return (
-                      <EditPhenotypicFeature
-                        key={`et-${pf.type?.id}-${i}`}
-                        ontology={pf.type}
-                        value={getYesNoUnknown(
-                          state?.phenoPacket?.phenotypicFeatures?.find(
-                            (x) => x.type?.id === pf.type?.id,
-                          ),
-                        )}
-                        onChange={(value) => {
-                          if (pf.type) save(pf.type, value);
-                        }}
-                      />
-                    );
-                  })}
-              </div>
             </div>
           ))}
       </fieldset>
