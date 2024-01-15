@@ -42,7 +42,7 @@ export default function Summary({ phenoPacket, customFormData }: IProps) {
           <div className="inline-flex my-2 text-xs border rounded border-slate-300 text-slate-500">
             <button
               className={`${
-                type === 'normal' ? 'bg-slate-300' : ''
+                type === 'normal' ? 'bg-udni-teal text-white' : ''
               } flex items-center p-2 hover:bg-white hover:text-gray-700`}
               onClick={() => setType('normal')}
             >
@@ -50,7 +50,7 @@ export default function Summary({ phenoPacket, customFormData }: IProps) {
             </button>
             <button
               className={`${
-                type === 'abnormal' ? 'bg-slate-300' : ''
+                type === 'abnormal' ? 'bg-udni-teal text-white' : ''
               } flex items-center p-2 border-l hover:bg-white hover:text-gray-700`}
               onClick={() => setType('abnormal')}
             >
@@ -58,7 +58,7 @@ export default function Summary({ phenoPacket, customFormData }: IProps) {
             </button>
             <button
               className={`${
-                type === 'all' ? 'bg-slate-300' : ''
+                type === 'all' ? 'bg-udni-teal text-white' : ''
               } flex items-center p-2 border-l hover:bg-white hover:text-gray-700`}
               onClick={() => setType('all')}
             >

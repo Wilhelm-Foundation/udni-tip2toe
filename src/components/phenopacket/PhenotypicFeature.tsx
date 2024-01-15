@@ -2,13 +2,16 @@ import { XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import { PhenotypicFeature as IPhenotypicFeature } from '../../interfaces/phenopackets/schema/v2/core/phenotypic_feature';
 import Ontology from './Ontology';
+import tip2toeForm from '../../tip2toeform';
 
 interface IProps {
   phenotypicFeature: IPhenotypicFeature;
 }
 export default function PhenotypicFeature({ phenotypicFeature }: IProps) {
   const { excluded } = phenotypicFeature;
-  const url = `/questionnaire/${phenotypicFeature.description}`;
+  const slug = phenotypicFeature.description;
+  const url = `/questionnaire/${slug}`;
+  const title = tip2toeForm.formSections?.find((s) => s.slug === slug)?.title;
   return (
     <div
       className={
@@ -29,7 +32,7 @@ export default function PhenotypicFeature({ phenotypicFeature }: IProps) {
       </NavLink>
       {phenotypicFeature?.description ? (
         <p className="text-sm flex items-end pl-5 lg:pl-0">
-          {'Added in ' + phenotypicFeature?.title}
+          {`Added in ${title}`}
         </p>
       ) : null}
     </div>

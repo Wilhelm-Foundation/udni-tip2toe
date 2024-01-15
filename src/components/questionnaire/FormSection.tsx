@@ -59,11 +59,7 @@ export default function FormSection({ formSection }: IProps) {
         </div>
       ) : null}
       <Questions questions={questions} />
-      <EditPhenotypicFeatures
-        ontologies={ontologies}
-        slug={slug}
-        title={title}
-      />
+      <EditPhenotypicFeatures ontologies={ontologies} slug={slug} />
     </>
   );
 }

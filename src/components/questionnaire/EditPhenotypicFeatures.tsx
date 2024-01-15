@@ -11,14 +11,9 @@ import NavButtons from './form/NavButtons';
 
 interface IProps {
   slug: string;
-  title: string;
   ontologies?: OntologyClass[];
 }
-export default function EditPhenotypicFeatures({
-  slug,
-  ontologies,
-  title,
-}: IProps) {
+export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
   const { state, dispatch } = useContext(AppContext);
 
   const save = async (ontology: OntologyClass, value: YesNoUnknown) => {
@@ -34,7 +29,6 @@ export default function EditPhenotypicFeatures({
           type: ontology,
           excluded: value === 'no',
           description: slug,
-          title: title,
         },
       });
   };
@@ -70,7 +64,6 @@ export default function EditPhenotypicFeatures({
               onset: undefined,
               resolution: undefined,
               severity: undefined,
-              title: '',
             } as PhenotypicFeature),
         ) || []),
       ];

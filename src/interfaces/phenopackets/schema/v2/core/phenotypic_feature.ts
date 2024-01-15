@@ -9,8 +9,6 @@ export const protobufPackage = 'org.phenopackets.schema.v2.core';
  * FHIR mapping: Condition (https://www.hl7.org/fhir/condition.html) or Observation (https://www.hl7.org/fhir/observation.html)
  */
 export interface PhenotypicFeature {
-  //add to show section under summary page
-  title: string;
   /**
    * Free-text description of the phenotype. Note this is not a acceptable place to document/describe the phenotype -
    * the type and onset etc... fields should be used for this purpose.
