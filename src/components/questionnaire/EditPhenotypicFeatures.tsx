@@ -8,6 +8,8 @@ import { lookupHpoTerm } from '../../utils/lookupHpoTerm';
 import AddCustomTerm, { AddCustomTermFormModel } from './form/AddCustomTerm';
 import EditPhenotypicFeature from './form/EditPhenotypicFeature';
 import NavButtons from './form/NavButtons';
+import { SuggestedPhenotypicFeatures } from './SuggestedPhenotypicFeatures';
+import SuggestedFeature from '../../interfaces/suggested-feature';
 
 interface IProps {
   slug: string;
@@ -16,7 +18,11 @@ interface IProps {
 export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
   const { state, dispatch } = useContext(AppContext);
 
-  const save = async (ontology: OntologyClass, value: YesNoUnknown) => {
+  const save = async (
+    ontology: OntologyClass,
+    value: YesNoUnknown,
+    addedViaSearch: boolean | undefined = undefined,
+  ) => {
     if (value === 'unknown')
       dispatch({
         type: 'REMOVE_PHENOTYPIC_FEATURE',
@@ -31,6 +37,15 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
           description: slug,
         },
       });
+    if (addedViaSearch === true) {
+      dispatch({
+        type: 'SEARCHED_PHENOTYPIC_FEATURE',
+        payload: {
+          ontology: ontology,
+          section: slug,
+        } as SuggestedFeature,
+      });
+    }
   };
 
   const setAllValues = async (value: YesNoUnknown) => {
@@ -107,7 +122,7 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
         setMessage(error);
       } else {
         // add hpo term
-        save({ id: term, label: label || '' }, 'yes');
+        save({ id: term, label: label || '' }, 'yes', true);
         setMessage(undefined);
       }
     } catch (error) {
@@ -212,6 +227,12 @@ export default function EditPhenotypicFeatures({ slug, ontologies }: IProps) {
             </div>
           ))}
       </fieldset>
+      <SuggestedPhenotypicFeatures
+        slug={slug}
+        addTerm={(term) => {
+          onAddCustomTerm({ term });
+        }}
+      ></SuggestedPhenotypicFeatures>
       <NavButtons />
     </>
   );
